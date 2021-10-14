@@ -6,7 +6,7 @@ import time
 capture = cv.VideoCapture("videos/vid_test_smile.3gp")
 
 mpFaceDetection = mp.solutions.face_detection
-FaceDetection = mpFaceDetection.FaceDetection()
+FaceDetection = mpFaceDetection.FaceDetection(0.75)
 
 pTime = 0
 
@@ -24,13 +24,17 @@ while True:
     # Feed RGB img to mediapipe
     results = FaceDetection.process(imgRGB)
 
+    # If you find a face
     if results.detections:
         for id, face in enumerate(results.detections):
-            ih, iw, ic = img.shape
+            ih, iw, ic = img.shape # Get dimensions of video
             bboxC = face.location_data.relative_bounding_box
+            
+            # Convert coordinates to pixels (needed for opencv)
             bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
                 int(bboxC.width * iw), int(bboxC.height * ih)
-            print(bbox)
+
+            cv.rectangle(img, bbox, (0,0,0), 2) # Draw rectangle around detected face
 
     # Calculating fps
     cTime = time.time()
