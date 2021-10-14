@@ -48,7 +48,7 @@ while True:
     cv.putText(img, f"Fps: {int(fps)}", (10, 50), cv.FONT_HERSHEY_COMPLEX, 1, (255,0,0), 2)
 
     cv.imshow("Video", img)
-    key = cv.waitKey(20)
+    key = cv.waitKey(0)
 
     if key==27:
         break # If key is pressed, break loop
