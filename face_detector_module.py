@@ -11,7 +11,7 @@ class FaceDetector():
         self.mpFaceDetection = mp.solutions.face_detection
         self.FaceDetection = self.mpFaceDetection.FaceDetection(min_detection_con)
 
-    def DetectFace(self, img):
+    def DetectFace(self, img, draw=True, coordinates=True, accuracy=True):
         # Convert vid to rgb for mediapipe
         imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
@@ -29,13 +29,18 @@ class FaceDetector():
                 bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
                     int(bboxC.width * iw), int(bboxC.height * ih)
 
-                array = (bbox, face.score, id)
+                array = (f"coordinates: {bbox}", f"accuraccy: {face.score}", f"id: {id}")
                 bboxs.append(array)
 
-                cv.rectangle(img, bbox, (0,0,0), 2) # Draw rectangle around detected face
+                if draw:
+                    cv.rectangle(img, bbox, (0,0,0), 2) # Draw rectangle around detected face
 
-                cv.putText(img, f"Accuraccy: {int(face.score[0]*100)}%", (bbox[0], bbox[1]-5),
-                cv.FONT_HERSHEY_COMPLEX, .5, (0,255,0), 1) # Showing accuraccy
+                if accuracy:
+                    cv.putText(img, f"Accuraccy: {int(face.score[0]*100)}%", (bbox[0], bbox[1]-5),
+                        cv.FONT_HERSHEY_COMPLEX, .5, (0,255,0), 1) # Showing accuraccy
+                    
+                if coordinates:
+                    return print(array)
 
 
 
