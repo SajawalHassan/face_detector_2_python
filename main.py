@@ -5,8 +5,8 @@ import time
 # Capturing vid (change filename to 0 if need webcam)
 capture = cv.VideoCapture("videos/vid_test_smile.3gp")
 
-mpFace = mp.solutions.face
-face = mpFace.Face()
+mpFaceDetection = mp.solutions.face_detection
+FaceDetection = mpFaceDetection.FaceDetection()
 
 pTime = 0
 
@@ -20,6 +20,17 @@ while True:
 
     # Convert vid to rgb for mediapipe
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+
+    # Feed RGB img to mediapipe
+    results = FaceDetection.process(imgRGB)
+
+    if results.detections:
+        for id, face in enumerate(results.detections):
+            ih, iw, ic = img.shape
+            bboxC = face.location_data.relative_bounding_box
+            bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
+                int(bboxC.width * iw), int(bboxC.height * ih)
+            print(bbox)
 
     # Calculating fps
     cTime = time.time()
