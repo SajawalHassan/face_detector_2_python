@@ -5,6 +5,9 @@ import time
 # Capturing vid (change filename to 0 if need webcam)
 capture = cv.VideoCapture("videos/vid_test_smile.3gp")
 
+mpFace = mp.solutions.face
+face = mpFace.Face()
+
 pTime = 0
 
 while True:
@@ -14,6 +17,9 @@ while True:
     # If can't read currunt frame, break loop
     if not success:
           break
+
+    # Convert vid to rgb for mediapipe
+    imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
     # Calculating fps
     cTime = time.time()
