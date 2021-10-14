@@ -36,6 +36,9 @@ while True:
 
             cv.rectangle(img, bbox, (0,0,0), 2) # Draw rectangle around detected face
 
+            cv.putText(img, f"Accuraccy: {int(face.score[0]*100)}", (bbox[0], bbox[1]-5),
+             cv.FONT_HERSHEY_COMPLEX, .5, (0,255,0), 1) # Showing accuraccy
+
     # Calculating fps
     cTime = time.time()
     fps = 1/(cTime - pTime)
