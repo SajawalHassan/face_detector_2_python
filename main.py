@@ -2,8 +2,8 @@ import cv2 as cv
 import mediapipe as mp
 import time
 
-# Capturing vid (change filename to 0 if need webcam)
-capture = cv.VideoCapture("videos/vid_test_smile.3gp")
+# Capturing vid
+capture = cv.VideoCapture(0)
 
 mpFaceDetection = mp.solutions.face_detection
 FaceDetection = mpFaceDetection.FaceDetection(0.75)
